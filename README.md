@@ -2,6 +2,10 @@
 
 **Nama Repository:** `Minpro-3-PBO-PengelolaanTagihanAir`
 
+**Nama:** `Alya Aulia`
+**NIM:** `2509116060`
+**Kelas:** `B`
+
 Program dikembangkan dengan menerapkan konsep Pemrograman Berorientasi Objek, yaitu **polymorphism, abstraction, inheritance, encapsulation, interface, serta struktur MVC (Model, View, Controller)**.
 Program digunakan untuk mengelola data warga, tagihan air, pembayaran, dan data petugas. Program juga dilengkapi validasi input agar data yang dimasukkan tidak kosong, tidak menggunakan ID yang sama, serta tidak menerima nilai yang tidak sesuai dengan aturan program.
 
