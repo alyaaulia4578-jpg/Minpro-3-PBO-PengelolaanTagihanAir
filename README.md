@@ -1,384 +1,436 @@
 # Sistem Pengelolaan Tagihan Air Perumahan Warga
 
+**Nama Repository:** `Minpro-3-PBO-PengelolaanTagihanAir`
+
+Program dikembangkan dengan menerapkan konsep Pemrograman Berorientasi Objek, yaitu **polymorphism, abstraction, inheritance, encapsulation, interface, serta struktur MVC (Model, View, Controller)**.
+Program digunakan untuk mengelola data warga, tagihan air, pembayaran, dan data petugas. Program juga dilengkapi validasi input agar data yang dimasukkan tidak kosong, tidak menggunakan ID yang sama, serta tidak menerima nilai yang tidak sesuai dengan aturan program.
+
+---
+
 ## Deskripsi Program
 
-Program Sistem Pengelolaan Tagihan Air Perumahan Warga merupakan
-aplikasi berbasis Java yang digunakan untuk mengelola data warga,
-tagihan penggunaan air, pembayaran tagihan, serta data petugas pada
-suatu lingkungan perumahan.
+Sistem Pengelolaan Tagihan Air Perumahan Warga adalah aplikasi sederhana berbasis Java yang digunakan untuk mengelola administrasi tagihan air warga.
 
-Pada Mini Project 2, program dikembangkan dengan menerapkan konsep
-Pemrograman Berorientasi Objek (PBO) serta struktur pemrograman yang
-lebih terorganisasi menggunakan konsep Model View Controller (MVC).
+Fitur utama program:
 
-Konsep PBO yang diterapkan: - Encapsulation - Inheritance -
-Polymorphism - Constructor - ArrayList - CRUD - Validasi input
+- Menambah data warga
+- Melihat data warga
+- Mengubah data warga
+- Menghapus data warga
+- Menambah tagihan air
+- Melihat tagihan air
+- Mengubah tagihan air
+- Menghapus tagihan air
+- Menambah pembayaran
+- Melihat data pembayaran
+- Melihat data petugas
+- Menghitung total tagihan berdasarkan pemakaian air
+- Mengubah status tagihan menjadi lunas setelah pembayaran berhasil
+- Melakukan validasi input
 
-Data program disimpan sementara menggunakan ArrayList selama aplikasi
-berjalan.
+Tarif air yang digunakan dalam program adalah **Rp3.000 per m³**.
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot tampilan awal program.
+---
 
-------------------------------------------------------------------------
+## Struktur Package
 
-# Fitur Program
+Program menggunakan beberapa package untuk memisahkan tanggung jawab setiap bagian program.
 
-Program memiliki fitur:
+```Struktur
+└── Main.java
+├── controller
+│   └── MenuController.java
+│
+├── model
+│   ├── User.java
+│   ├── Warga.java
+│   ├── Petugas.java
+│   ├── TagihanAir.java
+│   ├── Pembayaran.java
+│   └── DapatDihitung.java
+│
+├── service
+│   └── PengelolaanService.java
+│
+├── view
+    └── MenuView.java
 
-1.  Menambahkan data warga.
-2.  Menampilkan data warga.
-3.  Mengubah data warga.
-4.  Menghapus data warga.
-5.  Menambahkan tagihan air.
-6.  Menampilkan data tagihan air.
-7.  Mengubah data tagihan air.
-8.  Menghapus data tagihan air.
-9.  Menambahkan pembayaran.
-10. Menampilkan data pembayaran.
-11. Menampilkan data petugas.
+```
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot menu utama program.
+### Dokumentasi Struktur Package
 
-------------------------------------------------------------------------
+![Tampilan Menu Utama](SistemTagihanAir/docs/struktur-project.png)
 
-# Struktur Project
+### Controller
 
-    Minpro2PBO
+Package `controller` berisi `MenuController.java`.
 
-    ├── controller
-    │   └── MenuController.java
-    │
-    ├── model
-    │   ├── User.java
-    │   ├── Warga.java
-    │   ├── Petugas.java
-    │   ├── TagihanAir.java
-    │   └── Pembayaran.java
-    │
-    ├── service
-    │   └── PengelolaanService.java
-    │
-    ├── view
-    │   └── MenuView.java
-    │
-    └── Main.java
+Controller mengatur jalannya program, menerima input dari pengguna, memanggil service, dan menentukan proses yang dilakukan berdasarkan menu yang dipilih.
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot struktur package pada
-NetBeans.
+### Model
 
-------------------------------------------------------------------------
+Package `model` berisi class yang mewakili objek dalam sistem, yaitu:
 
-# Implementasi MVC
+- `User`
+- `Warga`
+- `Petugas`
+- `TagihanAir`
+- `Pembayaran`
+- `DapatDihitung`
 
-## 1. Model
+Bagian model menyimpan data dan perilaku masing-masing objek.
 
-Package model berisi class yang merepresentasikan objek dalam sistem.
+### Service
 
-Class yang digunakan:
+Package `service` berisi `PengelolaanService.java`.
 
-### User.java
+Class ini menangani penyimpanan data menggunakan `ArrayList`, pencarian data, penambahan data, serta penghapusan data.
 
-Class User merupakan superclass yang menyimpan atribut umum pengguna.
+### View
 
-Atribut: - idUser - nama
+Package `view` berisi `MenuView.java`.
 
-### Warga.java
+Class ini digunakan untuk menampilkan judul dan menu program kepada pengguna.
 
-Class Warga merupakan turunan dari User yang digunakan untuk menyimpan
-data warga.
+---
 
-Atribut tambahan: - alamat - nomorRumah
+## Alur Program
 
-### Petugas.java
+Program dimulai dari `Main.java`.
 
-Class Petugas merupakan turunan dari User yang digunakan untuk menyimpan
-data petugas.
+Alur umum program:
 
-Atribut tambahan: - jabatan
+```text
+Main
+  ↓
+MenuController
+  ↓
+MenuView menampilkan menu
+  ↓
+Pengguna memilih menu
+  ↓
+MenuController memproses pilihan
+  ↓
+Service mengelola data
+  ↓
+Model menyimpan dan mengolah data
+  ↓
+Hasil ditampilkan kembali kepada pengguna
+```
 
-### TagihanAir.java
+Ketika program dijalankan, pengguna akan melihat menu utama.
 
-Digunakan untuk menyimpan data tagihan air.
+![Tampilan Menu Utama](SistemTagihanAir/docs/01-menu-utama.png)
 
-Atribut: - idTagihan - warga - pemakaian - totalTagihan - status
+Pengguna dapat memilih fitur warga, tagihan, pembayaran, atau data petugas. Setelah suatu proses selesai, program meminta pengguna menekan ENTER untuk kembali ke menu.
 
-### Pembayaran.java
+---
 
-Digunakan untuk menyimpan data transaksi pembayaran.
+# Penerapan Konsep PBO
 
-Atribut: - idPembayaran - tagihan - tanggalBayar - jumlahBayar
+## Encapsulation
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot package model.
+Encapsulation diterapkan dengan membatasi akses langsung terhadap atribut class menggunakan access modifier `private`.
 
-------------------------------------------------------------------------
+Contohnya pada class `Warga`, atribut `alamat` dan `nomorRumah` dibuat `private`. Akses terhadap atribut tersebut dilakukan melalui method getter dan setter.
 
-## 2. View
+### Abstract Class
 
-Package view digunakan untuk mengatur tampilan program.
+![Abstract Class](SistemTagihanAir/docs/02-abstract-class.png)
 
-File:
+Penerapan ini membuat data di dalam object tidak dapat diubah secara langsung dari luar class. Pengelolaan data dilakukan melalui method yang disediakan oleh class.
 
-MenuView.java
+---
 
-Fungsi: - Menampilkan judul program. - Menampilkan daftar menu. -
-Mengatur tampilan pilihan pengguna.
+## Inheritance
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot MenuView.java.
+Inheritance diterapkan dengan membuat `Warga` dan `Petugas` sebagai turunan dari class `User`.
 
-------------------------------------------------------------------------
+Hubungannya:
 
-## 3. Controller
+```text
+User
+├── Warga
+└── Petugas
+```
 
-Package controller mengatur alur program.
+Class `Warga` mewarisi atribut dan method dari `User`, kemudian menambahkan atribut `alamat` dan `nomorRumah`.
 
-File:
+![Inheritance Warga](SistemTagihanAir/docs/04-inheritance-warga.png)
 
-MenuController.java
+Class `Petugas` juga mewarisi `User` dan menambahkan atribut `jabatan`.
 
-Fungsi: - Menerima input pengguna. - Menjalankan menu berdasarkan
-pilihan. - Melakukan validasi input. - Menghubungkan View dengan
-Service. - Menjalankan proses CRUD.
+![Inheritance Petugas](SistemTagihanAir/docs/05-inheritance-petugas.png)
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot MenuController.java.
+Dengan inheritance, bagian yang sama seperti `idUser` dan `nama` tidak perlu dibuat kembali pada setiap class turunan.
 
-------------------------------------------------------------------------
+---
 
-## 4. Service
+## Polymorphism
 
-Package service bertugas mengelola data.
+Polymorphism diterapkan melalui **overriding** dan **overloading**.
 
-File:
+### Overriding
 
-PengelolaanService.java
+Method `tampilkanInfo()` didefinisikan pada class induk `User` sebagai abstract method. Method tersebut kemudian diimplementasikan kembali pada class `Warga` dan `Petugas`.
 
-Fungsi: - Menyimpan data warga. - Menyimpan data tagihan. - Menyimpan
-data pembayaran. - Menyimpan data petugas. - Menjalankan proses tambah,
-cari, dan hapus data.
+Pada `Warga`, method menampilkan informasi warga.
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot PengelolaanService.java.
+![Overriding Warga](SistemTagihanAir/docs/06-overriding-warga.png)
 
-------------------------------------------------------------------------
+Pada `Petugas`, method yang sama digunakan untuk menampilkan informasi petugas.
 
-# Penerapan Encapsulation
+![Overriding Petugas](SistemTagihanAir/docs/07-overriding-petugas.png)
 
-Encapsulation diterapkan dengan membuat atribut setiap class menggunakan
-access modifier private.
+Nama method tetap sama, yaitu `tampilkanInfo()`, tetapi isi implementasinya berbeda sesuai dengan object yang digunakan.
 
-Contoh:
+### Overloading
 
-    private String nama;
-    private String alamat;
-    private int pemakaian;
+Overloading diterapkan pada class `TagihanAir` melalui method `hitungTotal()`.
 
-Akses terhadap data dilakukan melalui method getter dan setter.
+Terdapat method:
 
-Penerapan ini bertujuan: - Melindungi data agar tidak dapat diubah
-secara langsung. - Mengontrol perubahan nilai atribut. - Membuat
-struktur class lebih aman.
+```text
+hitungTotal()
+hitungTotal(int pemakaian)
+```
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot: - Atribut private. -
-Getter. - Setter.
+Keduanya memiliki nama yang sama, tetapi parameter berbeda.
 
-------------------------------------------------------------------------
+![Overloading](SistemTagihanAir/docs/10-overloading.png)
 
-# Penerapan Inheritance
+Method `hitungTotal()` digunakan untuk menghitung total tagihan berdasarkan data pemakaian yang tersimpan pada object, sedangkan `hitungTotal(int pemakaian)` dapat menerima nilai pemakaian sebagai parameter.
 
-Inheritance diterapkan dengan membuat class User sebagai superclass.
+---
 
-Struktur hubungan class:
+# Abstraction
 
-              User
-                |
-         ----------------
-         |              |
-       Warga        Petugas
+Abstraction diterapkan menggunakan abstract class dan abstract method.
 
-Implementasi:
+## Abstract Class
 
-    public class Warga extends User
+Class `User` dibuat sebagai abstract class.
 
-    public class Petugas extends User
+![Abstract Class](SistemTagihanAir/docs/02-abstract-class.png)
 
-Dengan inheritance, class Warga dan Petugas dapat menggunakan atribut
-serta method yang berasal dari User.
+Class `User` menjadi dasar bagi class `Warga` dan `Petugas`. Karena merupakan abstract class, `User` digunakan sebagai konsep umum dan bukan sebagai object yang dibuat secara langsung.
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot User.java, Warga.java, dan
-Petugas.java.
+## Abstract Method
 
-------------------------------------------------------------------------
+Pada class `User` terdapat abstract method:
 
-# Penerapan Polymorphism
+```text
+public abstract void tampilkanInfo();
+```
 
-Polymorphism diterapkan menggunakan method overriding.
+![Abstract Method](SistemTagihanAir/docs/03-abstract-method.png)
 
-Method:
+Method tersebut tidak memiliki isi pada class `User`. Implementasinya diberikan oleh class turunan `Warga` dan `Petugas`.
 
-    tampilkanInfo()
+Penerapan ini sekaligus mendukung penggunaan overriding karena setiap class turunan memberikan bentuk implementasi `tampilkanInfo()` yang sesuai dengan jenis datanya.
 
-Method tersebut dibuat pada class induk kemudian dioverride pada class
-turunan.
+---
 
-Implementasi: - Warga memiliki tampilan informasi warga. - Petugas
-memiliki tampilan informasi petugas.
+# Interface
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot method overriding.
+Program menggunakan interface `DapatDihitung`.
 
-------------------------------------------------------------------------
+Interface berisi method:
 
-# Implementasi CRUD
+```text
+int hitungTotal();
+```
 
-## Create
+![Interface](SistemTagihanAir/docs/08-interface.png)
 
-Create digunakan untuk menambahkan data baru.
+Interface tersebut kemudian diterapkan oleh class `TagihanAir`.
 
-Implementasi: - Tambah warga. - Tambah tagihan air. - Tambah pembayaran.
+![Implementasi Interface](SistemTagihanAir/docs/09-implementasi-interface.png)
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot proses tambah data.
+Dengan interface ini, proses perhitungan total tagihan memiliki aturan method yang harus diterapkan oleh class yang menggunakannya.
 
-------------------------------------------------------------------------
+---
 
-## Read
+# Keyword final
 
-Read digunakan untuk menampilkan data.
+Keyword `final` digunakan pada tarif air agar nilai tarif menjadi tetap dan tidak dapat diubah melalui pewarisan atau assignment ulang.
 
-Implementasi: - Lihat data warga. - Lihat tagihan air. - Lihat
-pembayaran. - Lihat petugas.
+Contohnya:
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot proses tampil data.
+```text
+private static final int TARIF_AIR = 3000;
+```
 
-------------------------------------------------------------------------
+![Keyword final](SistemTagihanAir/docs/12-final.png)
 
-## Update
+Nilai tersebut digunakan dalam proses perhitungan total tagihan.
 
-Update digunakan untuk mengubah data yang sudah tersimpan.
+---
 
-Implementasi: - Mengubah data warga. - Mengubah pemakaian tagihan air.
+# Fitur CRUD
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot proses ubah data.
+## 1. Create
 
-------------------------------------------------------------------------
+Program dapat menambahkan data warga dan tagihan.
 
-## Delete
+### Tambah Data Warga
 
-Delete digunakan untuk menghapus data.
+![Tambah Warga](SistemTagihanAir/docs/13-tambah-warga.png)
 
-Implementasi: - Menghapus warga. - Menghapus tagihan air.
+Data warga yang dimasukkan terdiri dari ID warga, nama, alamat, dan nomor rumah.
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot proses hapus data.
+### Tambah Tagihan Air
 
-------------------------------------------------------------------------
+![Tambah Tagihan](SistemTagihanAir/docs/14-tambah-tagihan.png)
+
+Pada contoh pengujian, warga `W2` memiliki pemakaian air sebesar `20 m3`.
+
+Dengan tarif Rp3.000/m³, total tagihan dihitung:
+
+```text
+20 × Rp3.000 = Rp60.000
+```
+
+Program kemudian menampilkan bahwa tagihan berhasil dibuat.
+
+---
+
+## 2. Read
+
+Data yang sudah tersimpan dapat ditampilkan melalui menu lihat data.
+
+Fitur ini digunakan untuk melihat data warga, tagihan air, pembayaran, dan petugas.
+![Tampilan Menu Utama](SistemTagihanAir/docs/01-menu-utama.png)
+
+---
+
+## 3. Update
+
+Data yang sudah tersimpan dapat diubah.
+
+Pada pengujian, pemakaian tagihan `T2` diubah dari `20 m3` menjadi `30 m3`.
+
+![Ubah Tagihan](SistemTagihanAir/docs/15-ubah-tagihan.png)
+
+Total tagihan kemudian berubah dari:
+
+```text
+20 m3 × Rp3.000 = Rp60.000
+```
+
+menjadi:
+
+```text
+30 m3 × Rp3.000 = Rp90.000
+```
+
+Hal ini menunjukkan bahwa total tagihan dihitung kembali ketika pemakaian diubah.
+
+
+---
+
+## 4. Delete
+
+Program juga menyediakan menu untuk menghapus data warga dan tagihan.
+
+![Tampilan Menu Utama](SistemTagihanAir/docs/01-menu-utama.png)
+
+---
+
+# Pembayaran
+
+Pembayaran dilakukan dengan memilih ID tagihan terlebih dahulu. Program menampilkan data tagihan yang dipilih, kemudian meminta tanggal pembayaran dan jumlah pembayaran.
+
+Pada pengujian:
+
+- Tanggal `7-10-2026` ditolak karena tidak sesuai format.
+- Setelah menggunakan format `07-10-2026`, tanggal diterima.
+- Pembayaran Rp50.000 ditolak karena kurang dari total tagihan Rp90.000.
+- Pembayaran Rp90.000 diterima.
+- Status tagihan berubah menjadi `Lunas`.
+
+
+![Pembayaran dan Validasi](SistemTagihanAir/docs/16-pembayaran-dan-validasi.png)
+
+Alur pembayaran:
+
+```text
+Pilih tagihan
+    ↓
+Tampilkan data tagihan
+    ↓
+Input tanggal pembayaran
+    ↓
+Validasi tanggal
+    ↓
+Input jumlah pembayaran
+    ↓
+Bandingkan dengan total tagihan
+    ↓
+Pembayaran valid
+    ↓
+Status menjadi Lunas
+```
+
+---
 
 # Validasi Input
 
-Program menerapkan validasi agar data yang masuk sesuai.
-
-Validasi yang diterapkan:
+Validasi ditambahkan sebagai perbaikan dari Mini Project 2. Tujuannya agar program tidak menerima input yang kosong, ID yang sudah digunakan, nilai pemakaian negatif, atau data pembayaran yang tidak sesuai.
 
 ## Input Tidak Boleh Kosong
 
-Digunakan pada: - ID warga. - Nama warga. - Alamat. - ID tagihan. - Data
-pembayaran.
+Jika pengguna langsung menekan ENTER ketika diminta mengisi data, program menampilkan pesan bahwa input tidak boleh kosong.
 
-## Validasi Angka
+![Validasi Input Kosong](SistemTagihanAir/docs/17-validasi-kosong.png)
 
-Digunakan pada: - Pemakaian air. - Jumlah pembayaran.
+---
 
-## Validasi Nilai Negatif
+## ID Warga Tidak Boleh Sama
 
-Program menolak: - Pemakaian air kurang dari 0. - Jumlah pembayaran
-kurang dari 0.
+Program mengecek ID warga sebelum data ditambahkan.
 
-## Validasi Data Duplikat
+Jika ID `W1` sudah digunakan dan dimasukkan kembali, program menolak data tersebut.
 
-Program melakukan pengecekan: - ID warga tidak boleh sama. - ID tagihan
-tidak boleh sama. - ID pembayaran tidak boleh sama.
+![Validasi ID Warga](SistemTagihanAir/docs/18-validasi-id-warga.png)
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot hasil validasi input.
+---
 
-------------------------------------------------------------------------
+## ID Tagihan Tidak Boleh Sama
 
-# Perhitungan Tagihan Air
+Program juga melakukan pengecekan terhadap ID tagihan.
 
-Program menggunakan tarif:
+Jika ID tagihan sudah digunakan, data tidak akan ditambahkan.
 
-    Rp3.000 / m3
+![Validasi ID Tagihan](SistemTagihanAir/docs/19-validasi-id-tagihan.png)
 
-Rumus:
+---
 
-    Total Tagihan = Pemakaian Air × Tarif Air
+## Pemakaian Air Tidak Boleh Negatif
 
-Contoh:
+Nilai pemakaian air tidak boleh kurang dari nol.
 
-    Pemakaian = 15 m3
+Pada pengujian, input `-5` ditolak oleh program.
 
-    Total Tagihan =
-    15 × 3000
+![Validasi Pemakaian](SistemTagihanAir/docs/20-validasi-pemakaian.png)
 
-    = Rp45.000
+---
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot hasil perhitungan tagihan.
+## Validasi Pembayaran
 
-------------------------------------------------------------------------
+Jumlah pembayaran harus sesuai dengan total tagihan.
 
-# Proses Pembayaran
+Pembayaran yang lebih kecil dari total tagihan ditolak. Pembayaran yang sesuai dengan total tagihan diterima dan status tagihan berubah menjadi `Lunas`.
 
-Pembayaran dilakukan berdasarkan ID tagihan.
+Validasi tanggal juga diterapkan sehingga tanggal harus mengikuti format yang ditentukan program.
 
-Data yang dimasukkan: - ID pembayaran. - ID tagihan. - Tanggal
-pembayaran. - Jumlah pembayaran.
+Dokumentasi pengujian pembayaran dan validasi tanggal dapat dilihat pada:
 
-Setelah pembayaran berhasil: - Data pembayaran disimpan. - Status
-tagihan berubah menjadi Lunas.
+![Pembayaran dan Validasi](SistemTagihanAir/docs/16-pembayaran-dan-validasi.png)
 
-\[TEMPAT SCREENSHOT\] Masukkan screenshot proses pembayaran.
-
-------------------------------------------------------------------------
-
-# Pengujian Program
-
-Pengujian dilakukan pada setiap fitur:
-
-## Tambah Data
-
-\[TEMPAT SCREENSHOT\]
-
-## Tampil Data
-
-\[TEMPAT SCREENSHOT\]
-
-## Ubah Data
-
-\[TEMPAT SCREENSHOT\]
-
-## Hapus Data
-
-\[TEMPAT SCREENSHOT\]
-
-## Validasi Input
-
-\[TEMPAT SCREENSHOT\]
-
-------------------------------------------------------------------------
-
-# Teknologi yang Digunakan
-
--   Java
--   Apache NetBeans
--   Git
--   GitHub
-
-------------------------------------------------------------------------
+---
 
 # Kesimpulan
 
-Program Sistem Pengelolaan Tagihan Air Perumahan Warga telah
-dikembangkan dengan menerapkan konsep Pemrograman Berorientasi Objek
-menggunakan Java.
-
-Program telah memenuhi ketentuan Mini Project 2 dengan menerapkan: -
-Minimal class utama di luar entry point. - Constructor. - ArrayList. -
-CRUD. - Encapsulation. - Inheritance. - Polymorphism. - Validasi
-input. - Struktur MVC.
-
-Dengan struktur tersebut, program menjadi lebih terorganisasi dan mudah
-dikembangkan.
+Program Sistem Pengelolaan Tagihan Air Perumahan Warga berhasil dikembangkan untuk mengelola data warga, tagihan air, pembayaran, dan petugas secara terstruktur. Program menerapkan konsep PBO seperti encapsulation, inheritance, polymorphism, abstraction, dan interface, serta menggunakan struktur MVC untuk memisahkan pengelolaan data, tampilan, dan alur program.
+Program juga dilengkapi CRUD dan validasi input, seperti pemeriksaan data kosong, ID duplikat, dan nilai pemakaian yang tidak boleh negatif. Dengan penerapan tersebut, program menjadi lebih terorganisasi, mudah dipahami, dan mampu menangani proses pengelolaan tagihan air sesuai kebutuhan sistem.
